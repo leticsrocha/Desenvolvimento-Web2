@@ -32,17 +32,35 @@
 
         <?php
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+            // Recebe os dados enviados pelo formulário
             $nome = $_POST["nome"];
             $email = $_POST["email"];
             $telefone = $_POST["telefone"];
 
+            // Obtém a conexão configurada no Render
+            $databaseUrl = getenv("DATABASE_URL");
+
+            // Conecta ao PostgreSQL
+            $conexao = pg_connect($databaseUrl);
+
+            // Salva o e-mail no banco
+            pg_query_params(
+                $conexao,
+                "INSERT INTO usuarios (email) VALUES ($1)",
+                array($email)
+            );
+
+            // Mostra os dados recebidos e confirmação
             echo "<div style='margin-top: 15px; padding: 10px; background: #e9ecef; border-radius: 4px;'>";
             echo "<p><strong>Nome recebido:</strong> " . $nome . "</p>";
             echo "<p><strong>E-mail recebido:</strong> " . $email . "</p>";
             echo "<p><strong>Telefone recebido:</strong> " . $telefone . "</p>";
+            echo "<p><strong>Cadastro realizado com sucesso!</strong></p>";
             echo "</div>";
         }
         ?>
+
     </div>
 
 </body>
