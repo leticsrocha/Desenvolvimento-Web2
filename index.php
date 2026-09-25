@@ -10,7 +10,8 @@
 
     <div class="container">
         <h2>Cadastro</h2>
-        <form>
+        
+        <form method="POST">
             <div class="form-group">
                 <label for="nome">Nome</label>
                 <input type="text" id="nome" name="nome" required>
@@ -28,6 +29,20 @@
 
             <button type="submit">Cadastrar</button>
         </form>
+
+        <?php
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $nome = $_POST["nome"];
+            $email = $_POST["email"];
+            $telefone = $_POST["telefone"];
+
+            echo "<div style='margin-top: 15px; padding: 10px; background: #e9ecef; border-radius: 4px;'>";
+            echo "<p><strong>Nome recebido:</strong> " . $nome . "</p>";
+            echo "<p><strong>E-mail recebido:</strong> " . $email . "</p>";
+            echo "<p><strong>Telefone recebido:</strong> " . $telefone . "</p>";
+            echo "</div>";
+        }
+        ?>
     </div>
 
 </body>
